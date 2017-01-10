@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="Aaron Li">
+	<title>Realtime Sketchpad</title>
+	<!-- css load -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+  <div id="content">
+		<div class="row">
+			<canvas class="container-fluid" id="sketchpad" style="border:3px solid green;"></canvas>
+			<div class="container-fluid">
+				<div id="animate" type="button" class="btn btn-default">animate</div>
+				<div id="undo" type="button" class="btn btn-default"><-</div>
+				<div id="redo" type="button" class="btn btn-default">-></div>
+			</div>
+		</div>
+	</div>
+
+  <div id="footer">MIT Licence</a>.
+  </div>
+
+<!-- js load -->
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="./static/sketchpad.js"></script>
+<script type="text/javascript" src="./static/sketchpad_loader.js"></script>
+</body>
+</html>
