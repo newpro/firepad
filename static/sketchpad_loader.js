@@ -1,10 +1,10 @@
 $(document).ready(function() {
-  // sketchpad Init
   var sketchpad = new Sketchpad({
     element: '#sketchpad',
     width: 400,
     height: 400,
-  });
+    background: ''
+  }, new Firebase(fireUrl).child('drawing'));
   sketchpad.color = '#FF0000';
   sketchpad.penSize = 10;
 

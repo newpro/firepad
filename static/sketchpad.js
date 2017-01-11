@@ -1,6 +1,6 @@
-// major credit go to: https://github.com/yiom/sketchpad
+// Based on: https://github.com/yiom/sketchpad
 class Sketchpad {
-  constructor(options) {
+  constructor(options, fireRef) {
     // Support both old api (element) and new (canvas)
     options.canvas = options.canvas || options.element;
     if (!options.canvas) {
@@ -21,6 +21,7 @@ class Sketchpad {
     }, this);
 
     // Setting default values
+    this.background = options.background || '';
     this.width = this.width || 0;
     this.height = this.height || 0;
 
@@ -29,9 +30,25 @@ class Sketchpad {
 
     this.readOnly = this.readOnly || false;
 
-    // Sketchpad History settings
-    this.strokes = options.strokes || [];
+    // Firebase
+    this.fireRef = fireRef;
 
+    // Stroke reference overwrite
+    this.strokes = {
+      'push': function(data) {
+        return fireRef.child('strokes').push(data);
+      },
+      'pop': function(cb) {
+        // fetch last child, http://jsfiddle.net/polmoneys/bPkDD/
+        return fireRef.child('strokes').limitToLast(1).once("child_added", function (snapshot) {
+          return fireRef.child('strokes').child(snapshot.key()).remove(function() {
+            cb(snapshot.val());
+          });
+        });
+      }
+    };
+
+    // Sketchpad History settings
     this.undoHistory = options.undoHistory || [];
 
     // Enforce context for Moving Callbacks
@@ -68,12 +85,14 @@ class Sketchpad {
 
   _stroke(stroke) {
     if (stroke.type === 'clear') {
-      return this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
-    stroke.lines.forEach(function(line) {
-      this._line(line.start, line.end, stroke.color, stroke.size);
-    }, this);
+    if (stroke.lines){
+      stroke.lines.forEach(function(line) {
+        this._line(line.start, line.end, stroke.color, stroke.size);
+      }, this);
+    }
   }
 
   _draw(start, end, color, size) {
@@ -117,10 +136,11 @@ class Sketchpad {
 
   onMouseUp(event) {
     if (this._sketching) {
-      this.strokes.push(this._currentStroke);
+      if (this._currentStroke.lines) {
+        this.strokes.push(this._currentStroke);
+      }
       this._sketching = false;
     }
-
     this.canvas.removeEventListener('mousemove', this.onMouseMove);
   }
 
@@ -167,12 +187,12 @@ class Sketchpad {
 
   undo() {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    var stroke = this.strokes.pop();
-    this.redraw();
-
-    if (stroke) {
-      this.undoHistory.push(stroke);
-    }
+    this.strokes.pop(function(stroke) {
+      this.redraw();
+      if (stroke) {
+        this.undoHistory.push(stroke);
+      }
+    }.bind(this));
   }
 
   clear() {
@@ -183,9 +203,17 @@ class Sketchpad {
   }
 
   redraw() {
-    this.strokes.forEach(function(stroke) {
-      this._stroke(stroke);
-    }, this);
+    this.fireRef.child('strokes').once("value", function(snapshot) {
+      var strokes = snapshot.val();
+      $.each(strokes, function(key, value) {
+        this._stroke(value);
+      }.bind(this));
+    }.bind(this));
+  }
+
+  addBackground(url) {
+    this.canvas.style.background = ("url(" + url + ") no-repeat");
+    this.canvas.style.backgroundSize = 'contain';
   }
 
   reset() {
@@ -193,10 +221,24 @@ class Sketchpad {
     this.canvas.width = this.width;
     this.canvas.height = this.height;
     this.context = this.canvas.getContext('2d');
-
+    if (!(this.context)) {
+      throw 'Your browser does not support canvas :\(';
+    }
+    if (this.background) {
+      this.addBackground(this.background);
+    }
     // Redraw image
-    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.redraw();
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height); // clear for watchers
+
+    this.fireRef.child('strokes').on("child_added", function(snapshot) {
+      var stroke = snapshot.val();
+      this._stroke(stroke);
+    }.bind(this));
+
+    this.fireRef.child('strokes').on("child_removed", function(snapshot) {
+      this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      this.redraw();
+    }.bind(this));
 
     // Remove all event listeners, this way readOnly option will be respected
     // on the reset
@@ -224,22 +266,26 @@ class Sketchpad {
     this.cancelAnimation();
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    this.strokes.forEach(stroke => {
-      if (stroke.type === 'clear') {
-        delay += interval;
-        return this.animateIds.push(setTimeout(() => {
-          this.context.clearRect(0, 0, this.canvas.width,
-                                 this.canvas.height);
-        }, delay));
-      }
-
-      stroke.lines.forEach(line => {
-        delay += interval;
-        this.animateIds.push(setTimeout(() => {
-          this._draw(line.start, line.end, stroke.color, stroke.size);
-        }, delay));
-      });
-    });
+    this.fireRef.child('strokes').once('value', function(snapshot) {
+      var strokes = snapshot.val();
+      $.each(strokes, function(key, stroke) {
+        if (stroke.type === 'clear') {
+          delay += interval;
+          return this.animateIds.push(setTimeout(() => {
+            this.context.clearRect(0, 0, this.canvas.width,
+                                   this.canvas.height);
+          }, delay));
+        }
+        if (stroke.lines) {
+          stroke.lines.forEach(line => {
+            delay += interval;
+            this.animateIds.push(setTimeout(() => {
+              this._draw(line.start, line.end, stroke.color, stroke.size);
+            }, delay));
+          });
+        }
+      }.bind(this));
+    }.bind(this));
 
     if (loop) {
       this.animateIds.push(setTimeout(() => {
