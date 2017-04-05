@@ -9,9 +9,11 @@
 	<meta name="author" content="Aaron Li">
 	<title>Realtime Sketchpad</title>
 	<!-- css load -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="./static/interact.css"/>
 </head>
 <body>
+	<!-- CONTENT -->
   <div id="content">
 		<div class="row">
 			<canvas class="container-fluid" id="sketchpad" style="border:3px solid green;"></canvas>
@@ -23,8 +25,16 @@
 		</div>
 	</div>
 
-  <div id="footer">MIT Licence</a>.
-  </div>
+	<div id="interact-container"> <!-- container that elem can not jump out  -->
+		<div id="dropzone" class="dropzone"></div>
+		<div id="draggables">
+			<div class="draggable droppable empty"> #droppable </div>
+		</div>
+	</div>
+
+	<!-- END OF CONTENT -->
+
+  <div id="footer">MIT Licence by <a href="https://github.com/newpro/firepad">newpro/firepad</a></div>
 
 <!-- js load -->
 <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
@@ -32,6 +42,7 @@
 <script src="https://cdn.firebase.com/js/client/2.0.2/firebase.js"></script>
 <script type="text/javascript" src="./static/settings.js"></script>
 <script type="text/javascript" src="./static/sketchpad.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/interact.js/1.2.6/interact.min.js"></script>
 <script type="text/javascript" src="./static/sketchpad_loader.js"></script>
 </body>
 </html>
