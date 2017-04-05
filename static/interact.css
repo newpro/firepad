@@ -1,7 +1,15 @@
-/* Interact General */
+/* Container */
 #interact-container {
   background-color: #29e;
+  border-style: solid;
+}
+
+.draggable-container {
+  /* contains one draggable, make sure it does not stack together */
+  width: 100px;
+  min-height: 100px;
   position: relative;
+  border-style: solid;
 }
 
 /* DropZone */
@@ -44,8 +52,10 @@
 
   transition: background-color 0.3s;
 
-  /*prevent stacking*/
+  /* prevents stacking, relative to draggable-container */
   position: absolute;
+  top: 5px;
+  left: 5px;
 }
 
 .droppable.dragin {

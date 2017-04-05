@@ -135,7 +135,7 @@ $(document).ready(function() {
         // delete this element
         droppableDelete(event.target);
       }
-      if (hasState(event.target, 'reset')) {
+      if (hasState(event.target, 'reset') || hasState(event.target, 'empty')) {
         droppableReset(event.target);
       }
     }

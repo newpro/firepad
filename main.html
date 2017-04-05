@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,13 +24,17 @@
 		</div>
 	</div>
 
-	<div id="interact-container"> <!-- container that elem can not jump out  -->
+	<div id="interact-container" class="container-fluid"> <!-- container that elem can not jump out  -->
 		<div id="dropzone" class="dropzone"></div>
-		<div id="draggables">
-			<div class="draggable droppable empty"> #droppable </div>
+		<div class="row">
+			<div class="draggable-container col-sm-2">
+				<div class="draggable droppable empty"> #droppable </div>
+			</div>
+			<div class="draggable-container col-sm-2">
+				<div class="draggable droppable empty"> #droppable </div>
+			</div>
 		</div>
 	</div>
-
 	<!-- END OF CONTENT -->
 
   <div id="footer">MIT Licence by <a href="https://github.com/newpro/firepad">newpro/firepad</a></div>
