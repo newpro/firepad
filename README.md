@@ -27,9 +27,9 @@ The more ppl fork it, the faster it would be improved.
 
 Support for [Admin SDK](https://firebase.google.com/docs/admin/setup) is coming!
 
-# Features
-
 # Docs is coming!
+
+# Features
 
 * Multiple users editing
   * Drawpad, with Redo and Undo
