@@ -13,20 +13,14 @@
 </head>
 <body>
 	<!-- CONTENT -->
-  <div id="content">
-		<div class="row">
-			<canvas class="container-fluid" id="sketchpad" style="border:3px solid green;"></canvas>
-			<div class="container-fluid">
-				<div id="animate" type="button" class="btn btn-default">animate</div>
-				<div id="undo" type="button" class="btn btn-default"><-</div>
-				<div id="redo" type="button" class="btn btn-default">-></div>
-			</div>
-		</div>
-	</div>
-
 	<div id="interact-container" class="container-fluid"> <!-- container that elem can not jump out  -->
-		<div id="dropzone" class="dropzone"></div>
-		<div class="row">
+		<div id="dropzone" class="dropzone">
+			<canvas class="container-fluid" id="sketchpad" style="border:3px solid green;"></canvas>
+		</div>
+		<div class="container-fluid">
+			<div id="animate" type="button" class="btn btn-default">animate</div>
+			<div id="undo" type="button" class="btn btn-default"><-</div>
+			<div id="redo" type="button" class="btn btn-default">-></div>
 			<div id='drop1' class="draggable-container col-sm-2">
 				<div class="draggable droppable empty"> #droppable </div>
 			</div>

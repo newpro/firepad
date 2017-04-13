@@ -18,8 +18,8 @@ NOTE: dropzone have to have fixed height and width to ensure
 same display across different clients
 */
 #dropzone {
-  height: 120px;
-  width: 600px;
+  height: 450px;
+  width: 450px;
 }
 
 .dropzone {
