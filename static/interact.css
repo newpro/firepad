@@ -1,0 +1,84 @@
+/* Container */
+#interact-container {
+  background-color: #29e;
+  border-style: solid;
+}
+
+.draggable-container {
+  /* contains one draggable, make sure it does not stack together */
+  width: 100px;
+  min-height: 100px;
+  position: relative;
+  border-style: solid;
+}
+
+/*
+DropZone
+NOTE: dropzone have to have fixed height and width to ensure
+same display across different clients
+*/
+#dropzone {
+  height: 450px;
+  width: 450px;
+}
+
+.dropzone {
+  background-color: #ccc;
+  border: dashed 4px transparent;
+  border-radius: 4px;
+  margin: 10px auto 30px;
+  padding: 10px;
+  width: 80%;
+  transition: background-color 0.3s;
+}
+
+.drop-active {
+  border-color: #aaa;
+}
+
+.drop-target {
+  background-color: #29e;
+  border-color: #fff;
+  border-style: solid;
+}
+
+/* droppable (Interact target) */
+.droppable {
+  display: inline-block;
+  min-width: 40px;
+  padding: 2em 0.5em;
+
+  color: #fff;
+  background-color: #29e;
+  border: solid 2px #fff;
+
+  -webkit-transform: translate(0px, 0px);
+          transform: translate(0px, 0px);
+
+  transition: background-color 0.3s;
+
+  /* prevents stacking, relative to draggable-container */
+  position: absolute;
+  top: 5px;
+  left: 5px;
+}
+
+.droppable.dragin {
+  background-color: orange;
+}
+
+.droppable.delete {
+  background-color: red;
+}
+
+.droppable.reset {
+  background-color: blue;
+}
+
+.droppable.dropped {
+  /*
+  this is canceled because states have priority over mid-states;
+  It will overwrites middle states display.
+  */
+  /*background-color: green;*/
+}

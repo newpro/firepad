@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,22 +8,30 @@
 	<meta name="author" content="Aaron Li">
 	<title>Realtime Sketchpad</title>
 	<!-- css load -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="./static/interact.css"/>
 </head>
 <body>
-  <div id="content">
-		<div class="row">
+	<!-- CONTENT -->
+	<div id="interact-container" class="container-fluid"> <!-- container that elem can not jump out  -->
+		<div id="dropzone" class="dropzone">
 			<canvas class="container-fluid" id="sketchpad" style="border:3px solid green;"></canvas>
-			<div class="container-fluid">
-				<div id="animate" type="button" class="btn btn-default">animate</div>
-				<div id="undo" type="button" class="btn btn-default"><-</div>
-				<div id="redo" type="button" class="btn btn-default">-></div>
+		</div>
+		<div class="container-fluid">
+			<div id="animate" type="button" class="btn btn-default">animate</div>
+			<div id="undo" type="button" class="btn btn-default"><-</div>
+			<div id="redo" type="button" class="btn btn-default">-></div>
+			<div id='drop1' class="draggable-container col-sm-2">
+				<div class="draggable droppable empty"> #droppable </div>
+			</div>
+			<div id='drop2' class="draggable-container col-sm-2">
+				<div class="draggable droppable empty"> #droppable </div>
 			</div>
 		</div>
 	</div>
+	<!-- END OF CONTENT -->
 
-  <div id="footer">MIT Licence</a>.
-  </div>
+  <div id="footer">MIT Licence by <a href="https://github.com/newpro/firepad">newpro/firepad</a></div>
 
 <!-- js load -->
 <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
@@ -32,6 +39,7 @@
 <script src="https://cdn.firebase.com/js/client/2.0.2/firebase.js"></script>
 <script type="text/javascript" src="./static/settings.js"></script>
 <script type="text/javascript" src="./static/sketchpad.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/interact.js/1.2.6/interact.min.js"></script>
 <script type="text/javascript" src="./static/sketchpad_loader.js"></script>
 </body>
 </html>
