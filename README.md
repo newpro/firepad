@@ -29,6 +29,20 @@ Support for [Admin SDK](https://firebase.google.com/docs/admin/setup) is coming!
 
 # Docs is coming!
 
+# Demos
+
+### Synced drawings
+
+![synced drawing gif](https://github.com/newpro/firepad/blob/develop/docs/1_draw.gif)
+
+### Synced redo/undo/animation on drawings
+
+![synced redo/undo gif](https://github.com/newpro/firepad/blob/develop/docs/2_undoredo.gif)
+
+### Synced drag and drops
+
+![synced droppable](https://github.com/newpro/firepad/blob/develop/docs/3_droppable.gif)
+
 # Features
 
 * Multiple users editing
